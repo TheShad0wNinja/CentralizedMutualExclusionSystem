@@ -8,6 +8,7 @@ import Model.CoordinatorRequest;
 import Model.Endpoint;
 import Model.ResourceType;
 
+import javax.swing.*;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -21,11 +22,27 @@ import static Branch.Branch.releaseResource;
  */
 public class TestPage extends javax.swing.JFrame {
 
+    private int delay = 2000;
+
     /**
      * Creates new form Test
      */
     public TestPage() {
         initComponents();
+        delayDuration.setValue(delay);
+    }
+
+    private void testAccess(ResourceType resource, CoordinatorRequest.AccessMode accessMode) {
+        new Thread(() -> {
+            try {
+                Endpoint resourceEndpoint = acquireResource(resource, accessMode);
+                System.out.println("Granted " + resource + " " + accessMode + " access at " + LocalTime.now());
+                Thread.sleep(delay);
+                releaseResource(resource, accessMode);
+            } catch (IOException | InterruptedException | ClassNotFoundException e) {
+                throw new RuntimeException(e);
+            }
+        }).start();
     }
 
     /**
@@ -36,93 +53,233 @@ public class TestPage extends javax.swing.JFrame {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
+        java.awt.GridBagConstraints gridBagConstraints;
 
-        readBtn = new javax.swing.JButton();
-        writeBtn = new javax.swing.JButton();
+        readCloth = new javax.swing.JButton();
+        writeCloth = new javax.swing.JButton();
+        readAccessory = new javax.swing.JButton();
+        writeAccessory = new javax.swing.JButton();
+        readFootwear = new javax.swing.JButton();
+        writeFootwear = new javax.swing.JButton();
+        readOrders = new javax.swing.JButton();
+        writeOrders = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+        jButton1 = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
+        delayDuration = new javax.swing.JSpinner();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        getContentPane().setLayout(new java.awt.GridBagLayout());
 
-        readBtn.setText("Read Cloth");
-        readBtn.addActionListener(new java.awt.event.ActionListener() {
+        readCloth.setText("Read Cloth");
+        readCloth.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                readBtnActionPerformed(evt);
+                readClothActionPerformed(evt);
             }
         });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 3;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.weightx = 0.1;
+        gridBagConstraints.weighty = 0.1;
+        gridBagConstraints.insets = new java.awt.Insets(7, 7, 7, 7);
+        getContentPane().add(readCloth, gridBagConstraints);
 
-        writeBtn.setText("Write Cloth");
-        writeBtn.addActionListener(new java.awt.event.ActionListener() {
+        writeCloth.setText("Write Cloth");
+        writeCloth.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                writeBtnActionPerformed(evt);
+                writeClothActionPerformed(evt);
             }
         });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 3;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.weightx = 0.1;
+        gridBagConstraints.weighty = 0.1;
+        gridBagConstraints.insets = new java.awt.Insets(7, 7, 7, 7);
+        getContentPane().add(writeCloth, gridBagConstraints);
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(54, 54, 54)
-                .addComponent(readBtn)
-                .addGap(62, 62, 62)
-                .addComponent(writeBtn)
-                .addContainerGap(95, Short.MAX_VALUE))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(127, 127, 127)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(readBtn)
-                    .addComponent(writeBtn))
-                .addContainerGap(150, Short.MAX_VALUE))
-        );
+        readAccessory.setText("Read Accessory");
+        readAccessory.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                readAccessoryActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 4;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.weightx = 0.1;
+        gridBagConstraints.weighty = 0.1;
+        gridBagConstraints.insets = new java.awt.Insets(7, 7, 7, 7);
+        getContentPane().add(readAccessory, gridBagConstraints);
+
+        writeAccessory.setText("Write Accessory");
+        writeAccessory.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                writeAccessoryActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 4;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.weightx = 0.1;
+        gridBagConstraints.weighty = 0.1;
+        gridBagConstraints.insets = new java.awt.Insets(7, 7, 7, 7);
+        getContentPane().add(writeAccessory, gridBagConstraints);
+
+        readFootwear.setText("Read Footwear");
+        readFootwear.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                readFootwearActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 5;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.weightx = 0.1;
+        gridBagConstraints.weighty = 0.1;
+        gridBagConstraints.insets = new java.awt.Insets(7, 7, 7, 7);
+        getContentPane().add(readFootwear, gridBagConstraints);
+
+        writeFootwear.setText("Write Footwear");
+        writeFootwear.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                writeFootwearActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 5;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.weightx = 0.1;
+        gridBagConstraints.weighty = 0.1;
+        gridBagConstraints.insets = new java.awt.Insets(7, 7, 7, 7);
+        getContentPane().add(writeFootwear, gridBagConstraints);
+
+        readOrders.setText("Read Orders");
+        readOrders.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                readOrdersActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 6;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.weightx = 0.1;
+        gridBagConstraints.weighty = 0.1;
+        gridBagConstraints.insets = new java.awt.Insets(7, 7, 7, 7);
+        getContentPane().add(readOrders, gridBagConstraints);
+
+        writeOrders.setText("Write Orders");
+        writeOrders.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                writeOrdersActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 6;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.weightx = 0.1;
+        gridBagConstraints.weighty = 0.1;
+        gridBagConstraints.insets = new java.awt.Insets(7, 7, 7, 7);
+        getContentPane().add(writeOrders, gridBagConstraints);
+
+        jLabel1.setFont(new java.awt.Font("Helvetica Neue", 1, 24)); // NOI18N
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel1.setText("Test Page");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.insets = new java.awt.Insets(13, 13, 13, 13);
+        getContentPane().add(jLabel1, gridBagConstraints);
+
+        jButton1.setText("Back");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 5);
+        getContentPane().add(jButton1, gridBagConstraints);
+
+        jLabel2.setText("Request Delay (Miliseconds): ");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.insets = new java.awt.Insets(0, 7, 0, 7);
+        getContentPane().add(jLabel2, gridBagConstraints);
+
+        delayDuration.setModel(new javax.swing.SpinnerNumberModel(0, null, null, 100));
+        delayDuration.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                delayDurationStateChanged(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.insets = new java.awt.Insets(0, 7, 0, 7);
+        getContentPane().add(delayDuration, gridBagConstraints);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void writeBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_writeBtnActionPerformed
-        try {
+    private void writeClothActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_writeClothActionPerformed
+        testAccess(ResourceType.INVENTORY_CLOTH, CoordinatorRequest.AccessMode.WRITE);
+    }//GEN-LAST:event_writeClothActionPerformed
 
-            new Thread(() -> {
-                try {
-                    Endpoint resourceEndpoint = acquireResource(ResourceType.INVENTORY_CLOTH, CoordinatorRequest.AccessMode.WRITE);
+    private void readClothActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_readClothActionPerformed
+        testAccess(ResourceType.INVENTORY_CLOTH, CoordinatorRequest.AccessMode.READ);
+    }//GEN-LAST:event_readClothActionPerformed
 
-                    System.out.println("Granted write access at " + LocalTime.now());
-                    Thread.sleep(2000);
-                    releaseResource(ResourceType.INVENTORY_CLOTH, CoordinatorRequest.AccessMode.WRITE);
-                } catch (IOException | InterruptedException | ClassNotFoundException e) {
-                    throw new RuntimeException(e);
-                }
-            }).start();
+    private void readAccessoryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_readAccessoryActionPerformed
+        testAccess(ResourceType.INVENTORY_ACCESSORIES, CoordinatorRequest.AccessMode.READ);
+    }//GEN-LAST:event_readAccessoryActionPerformed
 
+    private void writeAccessoryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_writeAccessoryActionPerformed
+        testAccess(ResourceType.INVENTORY_ACCESSORIES, CoordinatorRequest.AccessMode.WRITE);
+    }//GEN-LAST:event_writeAccessoryActionPerformed
 
-        } catch (Exception ex) {
-            ex.printStackTrace();
-            return;
-        }
-    }//GEN-LAST:event_writeBtnActionPerformed
+    private void readFootwearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_readFootwearActionPerformed
+        testAccess(ResourceType.INVENTORY_FOOTWEAR, CoordinatorRequest.AccessMode.READ);
+    }//GEN-LAST:event_readFootwearActionPerformed
 
-    private void readBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_readBtnActionPerformed
-        try {
+    private void writeFootwearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_writeFootwearActionPerformed
+        testAccess(ResourceType.INVENTORY_FOOTWEAR, CoordinatorRequest.AccessMode.WRITE);
+    }//GEN-LAST:event_writeFootwearActionPerformed
 
-            new Thread(() -> {
-                try {
-                    Endpoint resourceEndpoint = acquireResource(ResourceType.INVENTORY_CLOTH, CoordinatorRequest.AccessMode.READ);
+    private void readOrdersActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_readOrdersActionPerformed
+        testAccess(ResourceType.ORDERS, CoordinatorRequest.AccessMode.READ);
+    }//GEN-LAST:event_readOrdersActionPerformed
 
-                    System.out.println("Granted read access at " + LocalTime.now());
-                    Thread.sleep(2000);
-                    releaseResource(ResourceType.INVENTORY_CLOTH, CoordinatorRequest.AccessMode.READ);
-                } catch (IOException | InterruptedException | ClassNotFoundException e) {
-                    throw new RuntimeException(e);
-                }
-            }).start();
+    private void writeOrdersActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_writeOrdersActionPerformed
+        testAccess(ResourceType.ORDERS, CoordinatorRequest.AccessMode.WRITE);
+    }//GEN-LAST:event_writeOrdersActionPerformed
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        new HomePage().setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jButton1ActionPerformed
 
-        } catch (Exception ex) {
-            ex.printStackTrace();
-            return;
-        }
-    }//GEN-LAST:event_readBtnActionPerformed
+    private void delayDurationStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_delayDurationStateChanged
+        JSpinner jspinner = (JSpinner) evt.getSource();
+        delay = (int) jspinner.getValue();
+    }//GEN-LAST:event_delayDurationStateChanged
 
     /**
      * @param args the command line arguments
@@ -161,7 +318,17 @@ public class TestPage extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton readBtn;
-    private javax.swing.JButton writeBtn;
+    private javax.swing.JSpinner delayDuration;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JButton readAccessory;
+    private javax.swing.JButton readCloth;
+    private javax.swing.JButton readFootwear;
+    private javax.swing.JButton readOrders;
+    private javax.swing.JButton writeAccessory;
+    private javax.swing.JButton writeCloth;
+    private javax.swing.JButton writeFootwear;
+    private javax.swing.JButton writeOrders;
     // End of variables declaration//GEN-END:variables
 }

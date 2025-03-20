@@ -29,6 +29,24 @@ public class Branch {
         return endpoint;
     }
 
+    public static void createResource(ResourceType resourceType, Order order) {
+        try {
+            Endpoint resourceEndpoint = acquireResource(resourceType, CoordinatorRequest.AccessMode.WRITE);
+
+            Connection c = new Connection(resourceEndpoint);
+
+            c.writeUTF("create");
+            c.writeObject(order);
+
+            c.disconnect();
+
+
+            releaseResource(resourceType, CoordinatorRequest.AccessMode.WRITE);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+
     public static void createResource(ResourceType resourceType, InventoryItem inventoryItem) {
         try {
             Endpoint resourceEndpoint = acquireResource(resourceType, CoordinatorRequest.AccessMode.WRITE);
@@ -78,6 +96,26 @@ public class Branch {
 
 
             releaseResource(resourceType, CoordinatorRequest.AccessMode.READ);
+
+            return items;
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return null;
+        }
+    }
+
+    public static ArrayList<Order> getOrderList() {
+        try {
+            Endpoint resourceEndpoint = acquireResource(ResourceType.ORDERS, CoordinatorRequest.AccessMode.READ);
+
+            Connection c = new Connection(resourceEndpoint);
+
+            c.writeUTF("list");
+            ArrayList<Order> items = (ArrayList<Order>) c.in.readObject();
+
+            c.disconnect();
+
+            releaseResource(ResourceType.ORDERS, CoordinatorRequest.AccessMode.READ);
 
             return items;
         } catch (Exception ex) {

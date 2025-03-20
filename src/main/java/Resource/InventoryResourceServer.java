@@ -6,7 +6,7 @@ import java.io.IOException;
 import java.net.Socket;
 import java.util.*;
 
-public class InventoryResourceServer extends Resource {
+public class InventoryResourceServer extends ResourceServer {
     private ArrayList<InventoryItem> resources;
 
     public InventoryResourceServer(ResourceType resourceType) {
@@ -174,11 +174,8 @@ public class InventoryResourceServer extends Resource {
                 String request = c.in.readUTF();
                 System.out.println(request);
 
-                Scanner in = new Scanner(System.in);
-
                 switch (request) {
                     case "list":
-                        Thread.sleep(3000);
                         c.writeObject(resources);
                         break;
                     case "update":
@@ -195,8 +192,6 @@ public class InventoryResourceServer extends Resource {
                 c.disconnect();
             } catch (IOException | ClassNotFoundException e ) {
                 System.out.println(e);
-            } catch (InterruptedException e) {
-                throw new RuntimeException(e);
             }
         }
 
@@ -232,25 +227,6 @@ public class InventoryResourceServer extends Resource {
             int idx = resources.indexOf(item);
             if (idx >= 0)
                 resources.remove(idx);
-        }
-    }
-
-    public static void main(String[] args) {
-        Scanner in = new Scanner(System.in);
-        System.out.println("1: Cloth Inventory server\n2: Footwear Inventory server\n3: Accessories Inventory server");
-        int choice = in.nextInt();
-        switch (choice) {
-            case 1:
-                new InventoryResourceServer(ResourceType.INVENTORY_CLOTH);
-                break;
-            case 2:
-                new InventoryResourceServer(ResourceType.INVENTORY_FOOTWEAR);
-                break;
-            case 3:
-                new InventoryResourceServer(ResourceType.INVENTORY_ACCESSORIES);
-                break;
-            default:
-                break;
         }
     }
 }

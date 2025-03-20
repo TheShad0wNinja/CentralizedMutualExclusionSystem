@@ -1,6 +1,5 @@
 package Resource;
 
-import Model.Connection;
 import Model.Endpoint;
 import Model.ResourceType;
 
@@ -8,7 +7,7 @@ import java.net.*;
 import java.io.*;
 import java.util.*;
 
-abstract public class Resource {
+abstract public class ResourceServer {
     public static final HashMap<ResourceType, Endpoint> ENDPOINTS = new HashMap<>(Map.of(
             ResourceType.INVENTORY_CLOTH, new Endpoint("localhost", 5000),
             ResourceType.INVENTORY_ACCESSORIES, new Endpoint("localhost", 5100),
@@ -19,7 +18,7 @@ abstract public class Resource {
     private ServerSocket ss = null;
     protected ResourceType resourceType;
 
-    public Resource(ResourceType resourceType) {
+    public ResourceServer(ResourceType resourceType) {
         this.resourceType = resourceType;
         populateData();
         bindServer();
@@ -56,17 +55,24 @@ abstract public class Resource {
     protected abstract Runnable getSocketHandler(Socket socket);
 
     public static void main(String[] args) {
-        System.out.println("1: Inventory Server\n2: Orders Server");
         Scanner in = new Scanner(System.in);
-//        switch (in.nextInt()) {
-//            case 1:
-//                new Resource("inventory");
-//                break;
-//            case 2:
-//                new Resource("orders");
-//                break;
-//            default:
-//                System.exit(0);
-//        }
+        System.out.println("1: Cloth Inventory server\n2: Footwear Inventory server\n3: Accessories Inventory server\n4: Orders server");
+        int choice = in.nextInt();
+        switch (choice) {
+            case 1:
+                new InventoryResourceServer(ResourceType.INVENTORY_CLOTH);
+                break;
+            case 2:
+                new InventoryResourceServer(ResourceType.INVENTORY_FOOTWEAR);
+                break;
+            case 3:
+                new InventoryResourceServer(ResourceType.INVENTORY_ACCESSORIES);
+                break;
+            case 4:
+                new OrdersResourceServer();
+                break;
+            default:
+                break;
+        }
     }
 }

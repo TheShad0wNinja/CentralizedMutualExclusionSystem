@@ -498,13 +498,20 @@ public class ListInventoryPage extends javax.swing.JFrame {
                 // Show the dialog
                 int result = JOptionPane.showConfirmDialog(this, panel, "Enter Quantities of " + item.getName() + " to Sell", JOptionPane.OK_CANCEL_OPTION);
                 if (result == JOptionPane.OK_OPTION) {
+                    int totalQuantity = 0;
                     for (Cloth.Size size : Cloth.Size.values()) {
                         JSpinner quantitySpinner = (JSpinner) panel.getComponent(2 * size.ordinal() + 1);
                         int quantity = (int) quantitySpinner.getValue();
+                        totalQuantity += quantity;
                         item.removeQuantity(size, quantity);
                     }
+
+                    Order order = new Order(item.getName(), item.getPrice() * totalQuantity, totalQuantity);
                     setSizeTable();
-                    new Thread(() -> Branch.updateResource(ResourceType.INVENTORY_CLOTH, item)).start();
+                    new Thread(() -> {
+                        Branch.updateResource(ResourceType.INVENTORY_CLOTH, item);
+                        Branch.createResource(ResourceType.ORDERS, order);
+                    }).start();
                 }
             }
             case INVENTORY_FOOTWEAR -> {
@@ -525,13 +532,20 @@ public class ListInventoryPage extends javax.swing.JFrame {
 
                 int result = JOptionPane.showConfirmDialog(this, panel, "Enter Quantities of " + item.getName() + " to Sell", JOptionPane.OK_CANCEL_OPTION);
                 if (result == JOptionPane.OK_OPTION) {
+                    int totalQuantity = 0;
                     for (Footwear.Size size : Footwear.Size.values()) {
                         JSpinner quantitySpinner = (JSpinner) panel.getComponent(2 * size.ordinal() + 1);
                         int quantity = (int) quantitySpinner.getValue();
+                        totalQuantity += quantity;
                         item.removeQuantity(size, quantity);
                     }
+                    Order order = new Order(item.getName(), item.getPrice() * totalQuantity, totalQuantity);
+
                     setSizeTable();
-                    new Thread(() -> Branch.updateResource(ResourceType.INVENTORY_FOOTWEAR, item)).start();
+                    new Thread(() -> {
+                        Branch.updateResource(ResourceType.INVENTORY_FOOTWEAR, item);
+                        Branch.createResource(ResourceType.ORDERS, order);
+                    }).start();
                 }
             }
             case INVENTORY_ACCESSORIES -> {
@@ -554,8 +568,11 @@ public class ListInventoryPage extends javax.swing.JFrame {
                     int quantity = (int) spinner.getValue();
                     item.removeQuantity(quantity);
 
+                    Order order = new Order(item.getName(), item.getPrice() * quantity, quantity);
+
                     new Thread(() -> {
                         Branch.updateResource(ResourceType.INVENTORY_ACCESSORIES, item);
+                        Branch.createResource(ResourceType.ORDERS, order);
                         loadTableData();
                     }).start();
                 }

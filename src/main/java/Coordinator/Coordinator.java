@@ -5,7 +5,7 @@ import Model.CoordinatorRequest;
 import Model.CoordinatorRequest.*;
 import Model.Endpoint;
 import Model.ResourceType;
-import Resource.Resource;
+import Resource.ResourceServer;
 
 import java.net.*;
 import java.io.*;
@@ -227,7 +227,7 @@ public class Coordinator implements Runnable {
                 timeoutTimer.schedule(timeoutTask, timeoutDuration);
             }
 
-            c.writeObject(Resource.ENDPOINTS.get(request.resourceType));
+            c.writeObject(ResourceServer.ENDPOINTS.get(request.resourceType));
         }
 
         private void incrementSequenceNumber() {

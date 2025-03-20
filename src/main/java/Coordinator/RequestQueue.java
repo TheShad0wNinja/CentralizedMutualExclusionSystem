@@ -4,7 +4,6 @@
  */
 package Coordinator;
 
-import Model.CoordinatorRequest;
 import Model.ResourceType;
 
 import javax.swing.*;
@@ -41,7 +40,6 @@ public class RequestQueue extends javax.swing.JFrame {
                 table = ordersRequests;
                 break;
             default:
-                table = null;
                 return;
         }
         DefaultTableModel model;
@@ -82,7 +80,7 @@ public class RequestQueue extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new java.awt.GridBagLayout());
 
-        jLabel1.setFont(new java.awt.Font("Helvetica Neue", 1, 18)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Helvetica Neue", 1, 24)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("Requests Queue");
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -95,15 +93,23 @@ public class RequestQueue extends javax.swing.JFrame {
 
         jScrollPane2.setMinimumSize(new java.awt.Dimension(300, 200));
 
-        ordersRequests.setModel(inventoryClothsRequests.getModel());
+        ordersRequests.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Sequence No.", "IP", "Port", "Time", "Access"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, true, true, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         jScrollPane2.setViewportView(ordersRequests);
-        if (ordersRequests.getColumnModel().getColumnCount() > 0) {
-            ordersRequests.getColumnModel().getColumn(0).setHeaderValue("Sequence No.");
-            ordersRequests.getColumnModel().getColumn(1).setHeaderValue("IP");
-            ordersRequests.getColumnModel().getColumn(2).setHeaderValue("Port");
-            ordersRequests.getColumnModel().getColumn(3).setHeaderValue("Time");
-            ordersRequests.getColumnModel().getColumn(4).setHeaderValue("Access");
-        }
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
@@ -116,15 +122,23 @@ public class RequestQueue extends javax.swing.JFrame {
 
         jScrollPane4.setMinimumSize(new java.awt.Dimension(300, 200));
 
-        inventoryAccessoriesRequests.setModel(inventoryFootwearRequests.getModel());
+        inventoryAccessoriesRequests.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Sequence No.", "IP", "Port", "Time", "Access"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         jScrollPane4.setViewportView(inventoryAccessoriesRequests);
-        if (inventoryAccessoriesRequests.getColumnModel().getColumnCount() > 0) {
-            inventoryAccessoriesRequests.getColumnModel().getColumn(0).setHeaderValue("Sequence No.");
-            inventoryAccessoriesRequests.getColumnModel().getColumn(1).setHeaderValue("IP");
-            inventoryAccessoriesRequests.getColumnModel().getColumn(2).setHeaderValue("Port");
-            inventoryAccessoriesRequests.getColumnModel().getColumn(3).setHeaderValue("Time");
-            inventoryAccessoriesRequests.getColumnModel().getColumn(4).setHeaderValue("Access");
-        }
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
@@ -204,7 +218,7 @@ public class RequestQueue extends javax.swing.JFrame {
                 java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, true
+                false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
